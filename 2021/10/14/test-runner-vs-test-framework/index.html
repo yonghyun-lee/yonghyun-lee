@@ -1,0 +1,303 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  Test Runner vs Test Framework |   Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			Test Runner vs Test Framework
+		</p>
+		<div class="info">	
+			<time>
+				10월 14, 2021
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">506
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h1 id="Test-Software"><a href="#Test-Software" class="headerlink" title="Test Software"></a>Test Software</h1><ul>
+<li>Test Runners: Karma</li>
+<li>Testing Frameworks: Mocha</li>
+<li>Assertion Libraries: Chai</li>
+<li>Testing Plugins: Sinon</li>
+</ul>
+<h2 id="Test-Runners-Karma"><a href="#Test-Runners-Karma" class="headerlink" title="Test Runners: Karma"></a>Test Runners: Karma</h2><ul>
+<li>가짜 서버 띄움</li>
+<li>가짜 서버로부터 파생된 데이터를 사용하여 다양한 브라우저에서 실행하는 테스트 실행기</li>
+<li>실제 테스트를 실행하기 위해 Mocha같은 Test Framework가 필요함</li>
+</ul>
+<h2 id="Testing-Framework-Mocha"><a href="#Testing-Framework-Mocha" class="headerlink" title="Testing Framework: Mocha"></a>Testing Framework: Mocha</h2><ul>
+<li><code>it</code>, <code>beforeEach</code>, <code>describe</code> 같은 메소드 지원</li>
+<li>test runner보다는 낮지만 assertion library 보다는 높은 추상화 수준</li>
+</ul>
+<h2 id="Assertion-Libraries-Chai"><a href="#Assertion-Libraries-Chai" class="headerlink" title="Assertion Libraries: Chai"></a>Assertion Libraries: Chai</h2><ul>
+<li>실제 테스트인 부분을 구현</li>
+<li>조건을 검사해 validation함</li>
+<li>Jasmine같은 Testing Framework는 assertion library가 내장되어 있음.</li>
+</ul>
+<h2 id="Test-Plugins-Sinon"><a href="#Test-Plugins-Sinon" class="headerlink" title="Test Plugins: Sinon"></a>Test Plugins: Sinon</h2><ul>
+<li><code>Chai</code>와 함께 더 다양한 테스트 셋을 구성할 수 있도록 도와주는 역할</li>
+<li><code>Sinon</code> 을 통해 Mock, 가짜 서버, stub을 만들 수 있음.</li>
+<li>소스 내부로 들어가 확인할 수 있는 기능들이 있음.</li>
+</ul>
+  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-none-link" href="/tags/cs/" rel="tag">cs</a>
+      
+    </div>
+
+    <div class="operate">
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+    </div>
+    <div class="link">
+      
+      <a href="/2021/10/14/virtual-dom-vs-incremental-dom/" class="link-wrap">
+        <strong class="caption">newer</strong>
+        
+        <span class="title">
+          virtual dom vs incremental dom
+        </span>
+      </a>
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://' + 'yongs-blog-2' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>

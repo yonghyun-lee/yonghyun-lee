@@ -1,0 +1,348 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  Nx 통합 Monorepo 구축 기록 |   Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			nx 통합 monorepo 구축 기록
+		</p>
+		<div class="info">	
+			<time>
+				8월 14, 2023
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">4299
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h2 id="통합-모노레포란"><a href="#통합-모노레포란" class="headerlink" title="통합 모노레포란"></a>통합 모노레포란</h2><p><a target="_blank" rel="noopener" href="https://nx.dev/concepts/integrated-vs-package-based">https://nx.dev/concepts/integrated-vs-package-based</a></p>
+<ul>
+<li>root에 있는 하나의 package.json에서 모든 의존성을 관리하는 방식</li>
+</ul>
+<h3 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>이미 툴링, 의존성이 결정되었기 때문에 새로운 프로젝트를 추가하는 것이 쉬움.</li>
+<li>기존 프로젝트를 통합 모노레포로 옮기기는 어려움.</li>
+<li>하나의 의존성만 관리하기 때문에 관리비용이 적음.</li>
+<li>모든 의존성이 한곳에 있기 때문에 다른 의존성을 가진 프로젝트가 많아지면 오히려 관리가 복잡해질 수 있음.</li>
+</ul>
+<h2 id="목표"><a href="#목표" class="headerlink" title="목표"></a>목표</h2><ul>
+<li>react Ui library 프로젝트 추가</li>
+<li>nextjs 프로젝트 추가</li>
+<li>eslint, prettier 설정</li>
+<li>CD/CI</li>
+</ul>
+<h2 id="구축"><a href="#구축" class="headerlink" title="구축"></a>구축</h2><h3 id="nx-workspace-생성"><a href="#nx-workspace-생성" class="headerlink" title="nx workspace 생성"></a>nx workspace 생성</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-nx-workspace</span><br></pre></td></tr></tbody></table></figure>
+
+<p>원하는 옵션을 선택해 워크스페이스를 생성한다.</p>
+<p><img src="/images/nx-next-1.png"></p>
+<h3 id="ui-component-프로젝트-생성"><a href="#ui-component-프로젝트-생성" class="headerlink" title="ui-component 프로젝트 생성"></a>ui-component 프로젝트 생성</h3><p>vscode의 nx console 플러그인으로 생성.</p>
+<p><img src="/images/nx-next-2.png"></p>
+<p><img src="/images/nx-next-3.png"></p>
+<p><img src="/images/nx-next-4.png"></p>
+<p>importPath도 지정할 수 있다</p>
+<h3 id="airbnb-eslint-설정"><a href="#airbnb-eslint-설정" class="headerlink" title="airbnb eslint 설정"></a>airbnb eslint 설정</h3><ol>
+<li>eslint-config-airbnb 설치</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx install-peerdeps --dev eslint-config-airbnb</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>eslint-config-airbnb-typescript 설치</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint-config-airbnb-typescript --save-dev</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>airbnb eslint 설정</li>
+</ol>
+<p>root의 <code>.eslintrc.json</code>에 다음과 같이 추가</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="string">"airbnb-typescript"</span><span class="punctuation">,</span> <span class="comment">// 추가</span></span><br><span class="line">  <span class="string">"plugin:@nx/react-typescript"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"next"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"next/core-web-vitals"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"../../.eslintrc.json"</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이제 린트를 돌려보면 다음과 같은 에러가 발생함.</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-5.png" class="lazyload"></p>
+<p><a target="_blank" rel="noopener" href="https://nx.dev/recipes/tips-n-tricks/eslint">https://nx.dev/recipes/tips-n-tricks/eslint</a></p>
+<p>공홈에 nextjs는 다음과 같은 방법으로 해결하라고 되어있음.</p>
+<p><strong>nextjs의 .eslintrc.json</strong></p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/react"</span><span class="punctuation">,</span> <span class="string">"../../.eslintrc.json"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"!**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting</span></span><br><span class="line">      <span class="attr">"parserOptions"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"project"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"apps/org/tsconfig(.*)?.json"</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@typescript-eslint/await-thenable"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>react library의 .eslintrc.json</strong></p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/react"</span><span class="punctuation">,</span> <span class="string">"../../.eslintrc.json"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"!**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting</span></span><br><span class="line">      <span class="attr">"parserOptions"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"project"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"lib/ui-component/tsconfig.*?.json"</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@typescript-eslint/await-thenable"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>다시 린트를 돌려보면 다음과 같은 에러 발생한다</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-6.png" class="lazyload"></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Parsing error: ESLint was configured to run on `&lt;tsconfigRootDir&gt;/apps/org/jest.config.ts` using `parserOptions.project`</span><br></pre></td></tr></tbody></table></figure>
+
+<p>아무리 봐도 <code>jest.config.ts</code>가 include 되어있는데 자꾸 include 하란다.<br>그래서 <code>tsconfig.json</code>에 있는 exclude 목록에서 jest.config.ts를 제거해보니 정상동작함.<br>아무래도 include, exclude 둘다 되어있어서 충돌이 난게 아닐까 싶다.</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-7.png" class="lazyload"></p>
+<p>성공!</p>
+<h3 id="prettier-설정"><a href="#prettier-설정" class="headerlink" title="prettier 설정"></a>prettier 설정</h3><p>eslint의 prettier 설정으로 대체함.</p>
+<ol>
+<li>eslint-plugin-prettier</li>
+</ol>
+<p>eslint에서 prettier를 설정할 수 있게 해줌.<br>nx에서 prettier가 있어서 충돌나니 prettier 제거해준 후 설치</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm remove prettier</span><br><span class="line">npm install --save-dev eslint-plugin-prettier</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>eslint-config-prettier</li>
+</ol>
+<p>plugin:prettier/recommended 설정과 함께 prettier와 중복되는 eslint rule을 자동으로 꺼줌.</p>
+<p>root의 .eslintrc.json에서 설정</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"root"</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"plugins"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"@nx"</span><span class="punctuation">,</span> <span class="string">"prettier"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"prettier"</span><span class="punctuation">,</span> <span class="string">"plugin:prettier/recommended"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@nx/enforce-module-boundaries"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">"error"</span><span class="punctuation">,</span></span><br><span class="line">          <span class="punctuation">{</span></span><br><span class="line">            <span class="attr">"enforceBuildableLibDependency"</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">"allow"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">"depConstraints"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">              <span class="punctuation">{</span></span><br><span class="line">                <span class="attr">"sourceTag"</span><span class="punctuation">:</span> <span class="string">"*"</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">"onlyDependOnLibsWithTags"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*"</span><span class="punctuation">]</span></span><br><span class="line">              <span class="punctuation">}</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">          <span class="punctuation">}</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/typescript"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/javascript"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">    <span class="attr">"prettier/prettier"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">  <span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-none-link" href="/tags/nextjs/" rel="tag">nextjs</a> <a class="tag-none-link" href="/tags/nx/" rel="tag">nx</a> <a class="tag-none-link" href="/tags/react/" rel="tag">react</a>
+      
+    </div>
+
+    <div class="operate">
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+      <a href="/2023/08/11/react-reconciliation/" class="link-wrap">
+        <strong class="caption">older</strong>
+        
+        <span class="title">
+          React 재조정(Reconciliation)
+        </span>
+      </a>
+      
+    </div>
+    <div class="link">
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://' + 'yongs-blog-2' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon lazyload" src="/images/placeholder.png" data-src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>

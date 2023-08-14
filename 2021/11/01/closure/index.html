@@ -1,0 +1,301 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  클로저(Closure) |   Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			클로저(closure)
+		</p>
+		<div class="info">	
+			<time>
+				11월 01, 2021
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">837
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h1 id="클로저-Closure"><a href="#클로저-Closure" class="headerlink" title="클로저(Closure)"></a>클로저(Closure)</h1><p>클로저는 함수와 함수가 선언된 <strong>렉시컬 스코프</strong>의 조합이다.</p>
+<h2 id="렉시컬-스코프"><a href="#렉시컬-스코프" class="headerlink" title="렉시컬 스코프"></a>렉시컬 스코프</h2><p>함수가 어디에서 호출했는지가 아니라 어디에 선언되었는지에 따라 스코프가 결정되는 것을 말한다.</p>
+<p>어디에서 호출되었는지에 따라 스코프가 결정되는 것을 <code>동적 스코프</code>라고 한다.</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line">  B();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">A(); <span class="comment">// ?</span></span><br><span class="line">B(); <span class="comment">// ?</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>위의 예제에서 javascript는 선언할 때 스코프가 결정되므로 B 함수에서 사용하는 <code>x</code>는 선언할 때 스코프를 따라 가장 상위의 <code>var x = 1;</code>를 사용한다. A 함수를 호출했을 때, <code>x</code>가 새로 선언되어도 B 함수 스코프에 영향을 주지 않는다.</p>
+<h2 id="클로저의-예시"><a href="#클로저의-예시" class="headerlink" title="클로저의 예시"></a>클로저의 예시</h2><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeFunc</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">"Mozilla"</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">displayName</span>(<span class="params"></span>) </span>{</span><br><span class="line">    alert(name);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> displayName;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myFunc = makeFunc();</span><br><span class="line"><span class="comment">//myFunc변수에 displayName을 리턴함</span></span><br><span class="line"><span class="comment">//유효범위의 어휘적 환경을 유지</span></span><br><span class="line">myFunc();</span><br><span class="line"><span class="comment">//리턴된 displayName 함수를 실행(name 변수에 접근)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>위 예제에서 makeFunc() 함수가 종료되었음에도 <code>name</code>변수가 사라지지 않고 makeFunc의 리턴 함수인 <code>displayName</code>이 호출되었을 때 여전히 참조 가능 한 것을 알 수 있다.</p>
+<p>javascript는 참조를 사용하는 곳이 모두 없어지지 않으면 참조를 제거하지 않는다.</p>
+<p>그래서 <code>makeFunc()</code>함수가 종료되어도 렉시컬 스코프에 의해 클로저가 형성되어 <code>name</code>의 참조 사용이 유지된다.</p>
+<blockquote>
+<p>참조:</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures">https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures</a></p>
+</blockquote>
+  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+      
+    </div>
+
+    <div class="operate">
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+      <a href="/2021/10/20/javascript-data-type/" class="link-wrap">
+        <strong class="caption">older</strong>
+        
+        <span class="title">
+          javascript - 자바스크립트 데이터 타입
+        </span>
+      </a>
+      
+    </div>
+    <div class="link">
+      
+      <a href="/2023/08/11/react-reconciliation/" class="link-wrap">
+        <strong class="caption">newer</strong>
+        
+        <span class="title">
+          React 재조정(Reconciliation)
+        </span>
+      </a>
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://' + 'yongs-blog-2' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>

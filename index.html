@@ -1,0 +1,1004 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          
+
+
+<div class="index slideDownMin">
+	
+
+	<div class="profile">
+
+		<img class="avatar" src="/images/avatar.jpg">
+
+		<p class="author">Yong</p>
+
+		<div class="social">
+			
+			<a class="iconfont icon-Github" target="_blank" href="https://github.com/yonghyun-lee" title="Github">
+			</a>
+			
+			</div>
+	</div>
+
+
+	
+
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2023/08/14/nx-next-init/">nx 통합 monorepo 구축 기록</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>8월 14, 2023</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h2 id="통합-모노레포란"><a href="#통합-모노레포란" class="headerlink" title="통합 모노레포란"></a>통합 모노레포란</h2><p><a target="_blank" rel="noopener" href="https://nx.dev/concepts/integrated-vs-package-based">https://nx.dev/concepts/integrated-vs-package-based</a></p>
+<ul>
+<li>root에 있는 하나의 package.json에서 모든 의존성을 관리하는 방식</li>
+</ul>
+<h3 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>이미 툴링, 의존성이 결정되었기 때문에 새로운 프로젝트를 추가하는 것이 쉬움.</li>
+<li>기존 프로젝트를 통합 모노레포로 옮기기는 어려움.</li>
+<li>하나의 의존성만 관리하기 때문에 관리비용이 적음.</li>
+<li>모든 의존성이 한곳에 있기 때문에 다른 의존성을 가진 프로젝트가 많아지면 오히려 관리가 복잡해질 수 있음.</li>
+</ul>
+<h2 id="목표"><a href="#목표" class="headerlink" title="목표"></a>목표</h2><ul>
+<li>react Ui library 프로젝트 추가</li>
+<li>nextjs 프로젝트 추가</li>
+<li>eslint, prettier 설정</li>
+<li>CD/CI</li>
+</ul>
+<h2 id="구축"><a href="#구축" class="headerlink" title="구축"></a>구축</h2><h3 id="nx-workspace-생성"><a href="#nx-workspace-생성" class="headerlink" title="nx workspace 생성"></a>nx workspace 생성</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-nx-workspace</span><br></pre></td></tr></tbody></table></figure>
+
+<p>원하는 옵션을 선택해 워크스페이스를 생성한다.</p>
+<p><img src="/images/nx-next-1.png"></p>
+<h3 id="ui-component-프로젝트-생성"><a href="#ui-component-프로젝트-생성" class="headerlink" title="ui-component 프로젝트 생성"></a>ui-component 프로젝트 생성</h3><p>vscode의 nx console 플러그인으로 생성.</p>
+<p><img src="/images/nx-next-2.png"></p>
+<p><img src="/images/nx-next-3.png"></p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-4.png" class="lazyload"></p>
+<p>importPath도 지정할 수 있다</p>
+<h3 id="airbnb-eslint-설정"><a href="#airbnb-eslint-설정" class="headerlink" title="airbnb eslint 설정"></a>airbnb eslint 설정</h3><ol>
+<li>eslint-config-airbnb 설치</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx install-peerdeps --dev eslint-config-airbnb</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>eslint-config-airbnb-typescript 설치</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint-config-airbnb-typescript --save-dev</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>airbnb eslint 설정</li>
+</ol>
+<p>root의 <code>.eslintrc.json</code>에 다음과 같이 추가</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="string">"airbnb-typescript"</span><span class="punctuation">,</span> <span class="comment">// 추가</span></span><br><span class="line">  <span class="string">"plugin:@nx/react-typescript"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"next"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"next/core-web-vitals"</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">"../../.eslintrc.json"</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이제 린트를 돌려보면 다음과 같은 에러가 발생함.</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-5.png" class="lazyload"></p>
+<p><a target="_blank" rel="noopener" href="https://nx.dev/recipes/tips-n-tricks/eslint">https://nx.dev/recipes/tips-n-tricks/eslint</a></p>
+<p>공홈에 nextjs는 다음과 같은 방법으로 해결하라고 되어있음.</p>
+<p><strong>nextjs의 .eslintrc.json</strong></p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/react"</span><span class="punctuation">,</span> <span class="string">"../../.eslintrc.json"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"!**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting</span></span><br><span class="line">      <span class="attr">"parserOptions"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"project"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"apps/org/tsconfig(.*)?.json"</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@typescript-eslint/await-thenable"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>react library의 .eslintrc.json</strong></p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/react"</span><span class="punctuation">,</span> <span class="string">"../../.eslintrc.json"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"!**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting</span></span><br><span class="line">      <span class="attr">"parserOptions"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"project"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"lib/ui-component/tsconfig.*?.json"</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@typescript-eslint/await-thenable"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>다시 린트를 돌려보면 다음과 같은 에러 발생한다</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-6.png" class="lazyload"></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Parsing error: ESLint was configured to run on `&lt;tsconfigRootDir&gt;/apps/org/jest.config.ts` using `parserOptions.project`</span><br></pre></td></tr></tbody></table></figure>
+
+<p>아무리 봐도 <code>jest.config.ts</code>가 include 되어있는데 자꾸 include 하란다.<br>그래서 <code>tsconfig.json</code>에 있는 exclude 목록에서 jest.config.ts를 제거해보니 정상동작함.<br>아무래도 include, exclude 둘다 되어있어서 충돌이 난게 아닐까 싶다.</p>
+<p><img src="/images/placeholder.png" data-src="/images/nx-next-7.png" class="lazyload"></p>
+<p>성공!</p>
+<h3 id="prettier-설정"><a href="#prettier-설정" class="headerlink" title="prettier 설정"></a>prettier 설정</h3><p>eslint의 prettier 설정으로 대체함.</p>
+<ol>
+<li>eslint-plugin-prettier</li>
+</ol>
+<p>eslint에서 prettier를 설정할 수 있게 해줌.<br>nx에서 prettier가 있어서 충돌나니 prettier 제거해준 후 설치</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm remove prettier</span><br><span class="line">npm install --save-dev eslint-plugin-prettier</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>eslint-config-prettier</li>
+</ol>
+<p>plugin:prettier/recommended 설정과 함께 prettier와 중복되는 eslint rule을 자동으로 꺼줌.</p>
+<p>root의 .eslintrc.json에서 설정</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"root"</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"ignorePatterns"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"**/*"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"plugins"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"@nx"</span><span class="punctuation">,</span> <span class="string">"prettier"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"prettier"</span><span class="punctuation">,</span> <span class="string">"plugin:prettier/recommended"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"overrides"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">,</span> <span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">        <span class="attr">"@nx/enforce-module-boundaries"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">"error"</span><span class="punctuation">,</span></span><br><span class="line">          <span class="punctuation">{</span></span><br><span class="line">            <span class="attr">"enforceBuildableLibDependency"</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">"allow"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">"depConstraints"</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">              <span class="punctuation">{</span></span><br><span class="line">                <span class="attr">"sourceTag"</span><span class="punctuation">:</span> <span class="string">"*"</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">"onlyDependOnLibsWithTags"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*"</span><span class="punctuation">]</span></span><br><span class="line">              <span class="punctuation">}</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">          <span class="punctuation">}</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.ts"</span><span class="punctuation">,</span> <span class="string">"*.tsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/typescript"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">{</span></span><br><span class="line">      <span class="attr">"files"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"*.js"</span><span class="punctuation">,</span> <span class="string">"*.jsx"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"extends"</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">"plugin:@nx/javascript"</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span><span class="punctuation">}</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">"rules"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">    <span class="attr">"prettier/prettier"</span><span class="punctuation">:</span> <span class="string">"error"</span></span><br><span class="line">  <span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/react/">react</a>           
+			            
+				<a class="link" href="/tags/nextjs/">nextjs</a>           
+			            
+				<a class="link" href="/tags/nx/">nx</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2023/08/14/nx-next-init/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2023/08/11/react-reconciliation/">React 재조정(Reconciliation)</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>8월 11, 2023</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<ul>
+<li>state나 props가 갱신되면 새로운 react 엘리먼트 트리 반환</li>
+<li>n개의 엘리먼트에 대해 O(n) 복잡도 - 휴리스틱 알고리즘 사용<ul>
+<li>서로 다른 타입의 두 엘리먼트는 서로 다른 트리를 만들어낸다</li>
+<li>개발자가 key prop를 통해, 여러 렌더링 사이에서 어떤 자식 엘리먼트가 변경되지 않아야 할지 표시</li>
+</ul>
+</li>
+</ul>
+<h2 id="비교-알고리즘"><a href="#비교-알고리즘" class="headerlink" title="비교 알고리즘"></a>비교 알고리즘</h2><p>2개 트리 비교시, 루트부터 비교<br>이후의 동작은 루트 엘리먼트의 타입에 따라 다름</p>
+<h3 id="dom-엘리먼트의-타입이-다른-경우"><a href="#dom-엘리먼트의-타입이-다른-경우" class="headerlink" title="dom 엘리먼트의 타입이 다른 경우"></a>dom 엘리먼트의 타입이 다른 경우</h3><ul>
+<li><code>&lt;a&gt;</code> → <code>&lt;img&gt;</code> 등 태그가 바뀌면 기존 트리를 버리고 완전히 새로 트리를 구축</li>
+<li>트리를 버릴 때 이전 dom 노드 모두 파괴</li>
+<li>새트리가 만들어질때 새 dom 노드들이 dom에 삽입</li>
+<li>이전 트리와 연관된 state 모두 사라짐</li>
+</ul>
+<h3 id="dom-엘리먼트의-타입이-같은-경우"><a href="#dom-엘리먼트의-타입이-같은-경우" class="headerlink" title="dom 엘리먼트의 타입이 같은 경우"></a>dom 엘리먼트의 타입이 같은 경우</h3><ul>
+<li>두 엘리먼트의 속성 확인해 동일한 내역을 유지하고 변경된 속성들만 갱신</li>
+<li>dom 노드 처리가 끝나면 react는 이어서 노드의 자식들을 재귀적으로 처리</li>
+</ul>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/react/">react</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2023/08/11/react-reconciliation/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/11/01/closure/">클로저(closure)</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>11월 01, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h1 id="클로저-Closure"><a href="#클로저-Closure" class="headerlink" title="클로저(Closure)"></a>클로저(Closure)</h1><p>클로저는 함수와 함수가 선언된 <strong>렉시컬 스코프</strong>의 조합이다.</p>
+<h2 id="렉시컬-스코프"><a href="#렉시컬-스코프" class="headerlink" title="렉시컬 스코프"></a>렉시컬 스코프</h2><p>함수가 어디에서 호출했는지가 아니라 어디에 선언되었는지에 따라 스코프가 결정되는 것을 말한다.</p>
+<p>어디에서 호출되었는지에 따라 스코프가 결정되는 것을 <code>동적 스코프</code>라고 한다.</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line">  B();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">A(); <span class="comment">// ?</span></span><br><span class="line">B(); <span class="comment">// ?</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>위의 예제에서 javascript는 선언할 때 스코프가 결정되므로 B 함수에서 사용하는 <code>x</code>는 선언할 때 스코프를 따라 가장 상위의 <code>var x = 1;</code>를 사용한다. A 함수를 호출했을 때, <code>x</code>가 새로 선언되어도 B 함수 스코프에 영향을 주지 않는다.</p>
+<h2 id="클로저의-예시"><a href="#클로저의-예시" class="headerlink" title="클로저의 예시"></a>클로저의 예시</h2><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeFunc</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">"Mozilla"</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">displayName</span>(<span class="params"></span>) </span>{</span><br><span class="line">    alert(name);</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> displayName;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myFunc = makeFunc();</span><br><span class="line"><span class="comment">//myFunc변수에 displayName을 리턴함</span></span><br><span class="line"><span class="comment">//유효범위의 어휘적 환경을 유지</span></span><br><span class="line">myFunc();</span><br><span class="line"><span class="comment">//리턴된 displayName 함수를 실행(name 변수에 접근)</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>위 예제에서 makeFunc() 함수가 종료되었음에도 <code>name</code>변수가 사라지지 않고 makeFunc의 리턴 함수인 <code>displayName</code>이 호출되었을 때 여전히 참조 가능 한 것을 알 수 있다.</p>
+<p>javascript는 참조를 사용하는 곳이 모두 없어지지 않으면 참조를 제거하지 않는다.</p>
+<p>그래서 <code>makeFunc()</code>함수가 종료되어도 렉시컬 스코프에 의해 클로저가 형성되어 <code>name</code>의 참조 사용이 유지된다.</p>
+<blockquote>
+<p>참조:</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures">https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures</a></p>
+</blockquote>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/javascript/">javascript</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/11/01/closure/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/10/20/javascript-data-type/">javascript - 자바스크립트 데이터 타입</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>10월 20, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h1 id="자바스크립트의-타입"><a href="#자바스크립트의-타입" class="headerlink" title="자바스크립트의 타입"></a>자바스크립트의 타입</h1><ul>
+<li>기본 타입<ul>
+<li>number, string, boolean, null, undefined</li>
+</ul>
+</li>
+<li>참조 타입<ul>
+<li>Object, Array</li>
+</ul>
+</li>
+</ul>
+<h1 id="기본-타입"><a href="#기본-타입" class="headerlink" title="기본 타입"></a>기본 타입</h1><p>숫자, 문자열, 불린, null, undefined가 있다. 기본 타입의 특징은 그 자체가 하나의 값을 나타낸다.</p>
+<h2 id="숫자"><a href="#숫자" class="headerlink" title="숫자"></a>숫자</h2><p>C언어는 int, long, float, double 같은 여러 숫자 타입이 존재하지만, 자바스크립트는 number라는 하나의 숫자형만 존재한다. 자바스크립트에서는 <strong>모든 숫자를 64비트 부동 소수점 형태</strong>로 저장하기 때문이다. C언어의 double과 유사하다.</p>
+<h3 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>정수형이 따로 없다</li>
+<li>모든 숫자를 64비트 부동 소수점 형태</li>
+<li>모든 숫자를 실수로 처리하므로 나눗셈 연산에 주의해야 한다.</li>
+</ul>
+<h2 id="문자열"><a href="#문자열" class="headerlink" title="문자열"></a>문자열</h2><p>문자열은 작은 따옴표(‘)나 큰 따옴표(“)로 생성할 수 있다. </p>
+<h3 id="특징-1"><a href="#특징-1" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>C언어에서의 char 타입처럼 문자 하나만을 별도로 나타내는 데이터 타입은 없다.</li>
+<li>한 번 정의된 문자열은 변하지 않는다.</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'test'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str[<span class="number">0</span>], str[<span class="number">1</span>], str[<span class="number">2</span>], str[<span class="number">3</span>]);</span><br><span class="line"><span class="comment">// (출력값) test</span></span><br><span class="line"></span><br><span class="line">str[<span class="number">0</span>] = <span class="string">'T'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str);</span><br><span class="line"><span class="comment">// (출력값) test</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="불린값-boolean"><a href="#불린값-boolean" class="headerlink" title="불린값(boolean)"></a>불린값(boolean)</h2><p>자바스크립트에는 true와 false를 나타내는 boolean 타입이 있다.</p>
+<h2 id="null과-undefined"><a href="#null과-undefined" class="headerlink" title="null과 undefined"></a>null과 undefined</h2><p>null과 undefined는 ‘값이 비어있음’을 나타낸다. 자바스크립트 환경 내에서 기본적으로 할당되지 않는 변수는 undefined 타입이고 값도 undefined이다. 즉 <strong>undefined는 타입이자, 값을 나타낸다</strong>.</p>
+<p>undefined가 아직 값을 할당하지 않아서 비어있는 값이라면, null은 개발자가 명시적으로 값이 없다는 것을 나타낼 때 사용한다. 그래서 undefined는 타입도 undefined지만 null 값을 넣은 변수의 타입은 object이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nullVar = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> nullVar === <span class="literal">null</span>);  <span class="comment">// (출력값) false</span></span><br><span class="line"><span class="built_in">console</span>.log(nullVar === <span class="literal">null</span>);         <span class="comment">// (출력값) true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="특징-2"><a href="#특징-2" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>undefined, null는 값이 비어있다는 의미</li>
+<li>undefined는 아직 값을 할당하지 않은 것, null은 일부러 값이 비어있음을 명시할 때</li>
+<li>undefined는 타입이자 값</li>
+<li>null의 타입은 object</li>
+</ul>
+<h1 id="참조-타입-객체"><a href="#참조-타입-객체" class="headerlink" title="참조 타입 (객체)"></a>참조 타입 (객체)</h1><p>자바스크립트에서 기본 타입을 제외한 모든 값은 객체이다. 배열, 함수, 정규표현식 등도 모두 객체다. 즉 참조 타입은 객체 타입이다.</p>
+<p>자바스크립트 객체는 <code>이름(key): 값(value)</code> 형태의 프로퍼티들을 저장하는 컨테이너이다. 이것은 컴퓨터 과학 분야에서 해시(Hash)라는 자료구조와 유사하다.</p>
+<h2 id="객체-생성"><a href="#객체-생성" class="headerlink" title="객체 생성"></a>객체 생성</h2><p>객체를 생성하는 방법은 3가지가 있다.</p>
+<ul>
+<li>Object() 생성자 함수</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">foo.name = <span class="string">'foo'</span>;</span><br><span class="line">foo.age = <span class="number">30</span>;</span><br><span class="line">foo.gender = <span class="string">'male'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo); <span class="comment">// (출력값) object</span></span><br><span class="line"><span class="built_in">console</span>.log(foo);        <span class="comment">// (출력값) { name: 'foo', age: 30, gender: 'male' }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>객체 리터럴 방식 이용</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">age</span>: <span class="number">30</span>,</span><br><span class="line">	<span class="attr">gender</span> : <span class="string">'male'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);</span><br><span class="line"><span class="built_in">console</span>.log(foo);</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>생성자 함수</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name, age, gender</span>) </span>{</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">	<span class="built_in">this</span>.age = age;</span><br><span class="line">	<span class="built_in">this</span>.gender = gender;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> Foo(<span class="string">'foo'</span>, <span class="number">30</span>, <span class="string">'male'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(f.name); <span class="comment">// (출력값) foo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="객체-프로퍼티-읽기-쓰기-갱신"><a href="#객체-프로퍼티-읽기-쓰기-갱신" class="headerlink" title="객체 프로퍼티 읽기/쓰기/갱신"></a>객체 프로퍼티 읽기/쓰기/갱신</h2><p>객체의 프로퍼티 접근법은 2가지가 있다.</p>
+<ul>
+<li>대괄호([]) 표기법</li>
+<li>마침표(.) 표기법</li>
+</ul>
+<h3 id="프로퍼티-읽기"><a href="#프로퍼티-읽기" class="headerlink" title="프로퍼티 읽기"></a>프로퍼티 읽기</h3><figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(foo.name);    <span class="comment">// (출력값) foo</span></span><br><span class="line"><span class="built_in">console</span>.log(foo[<span class="string">'name'</span>]); <span class="comment">// (출력값) foo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="프로퍼티-갱신"><a href="#프로퍼티-갱신" class="headerlink" title="프로퍼티 갱신"></a>프로퍼티 갱신</h3><figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.major = <span class="string">'electronics engineering'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo[<span class="string">'major'</span>]); <span class="comment">// (출력값) electronics engineering</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="프로퍼티-동적-생성"><a href="#프로퍼티-동적-생성" class="headerlink" title="프로퍼티 동적 생성"></a>프로퍼티 동적 생성</h3><p>객체 생성 후에도 동적으로 프로퍼티를 추가할 수 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.age); <span class="comment">// (출력값) 30</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>접근하는 값이 있으면 갱신되고 없으면 동적으로 생성해 추가된다.</p>
+<h3 id="대괄호-표기법만-사용해야-하는-경우"><a href="#대괄호-표기법만-사용해야-하는-경우" class="headerlink" title="대괄호 표기법만 사용해야 하는 경우"></a>대괄호 표기법만 사용해야 하는 경우</h3><p>접근하려는 프로퍼티가 표현식이거나 예약어일 경우 대괄호 표기법만 사용한다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span>,</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo[<span class="string">'full-name'</span>] = <span class="string">'foo bar'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.full-name); <span class="comment">// (출력값) NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.[<span class="string">'full-name'</span>]); <span class="comment">// (출력값) foo bar</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이 예제에서 프로퍼티 이름에 <code>-</code>연산자가 포함되어 있어 마침표 표기법으로 접근할 수 없다.</p>
+<h2 id="NaN-Not-a-Number"><a href="#NaN-Not-a-Number" class="headerlink" title="NaN (Not a Number)"></a>NaN (Not a Number)</h2><p>자바스크립트에서 수치 연산을 해서 정상적인 값을 얻지 못할 때 출력되는 값이다.</p>
+<h2 id="객체-참조값"><a href="#객체-참조값" class="headerlink" title="객체 참조값"></a>객체 참조값</h2><p>객체를 왜 참조 타입이라고 부를까?</p>
+<p>객체의 모든 연산이 실제 값이 아닌 참조값으로 처리되기 때문이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objA = {</span><br><span class="line">	<span class="attr">val</span> : <span class="number">40</span></span><br><span class="line">};</span><br><span class="line"><span class="keyword">var</span> objB = objA;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(objA.val); <span class="comment">// (출력값) 40</span></span><br><span class="line"><span class="built_in">console</span>.log(objB.val); <span class="comment">// (출력값) 40</span></span><br><span class="line"></span><br><span class="line">objB.val = <span class="number">50</span>;</span><br><span class="line"><span class="built_in">console</span>.log(objA.val); <span class="comment">// (출력값) 50</span></span><br><span class="line"><span class="built_in">console</span>.log(objB.val); <span class="comment">// (출력값) 50</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>변수 objB에 objA를 할당하면 값을 할당하는 것이 아닌 참조값이 저장되기 때문에 값을 바꾸면 참조하고 있는 모든 객체의 값이 바뀐다.</p>
+<p><img src="/images/placeholder.png" data-src="/images/javascript-data-type-img-1.png" class="lazyload"></p>
+<h3 id="객체-비교"><a href="#객체-비교" class="headerlink" title="객체 비교"></a>객체 비교</h3><p>동등 연산자(==)를 사용하여 객체를 비교할 때도 프로퍼티 값이 아닌 참조값을 비교한다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objA = { <span class="attr">value</span>: <span class="number">100</span> };</span><br><span class="line"><span class="keyword">var</span> objB = { <span class="attr">value</span>: <span class="number">100</span> };</span><br><span class="line"><span class="keyword">var</span> objC = objB;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a == b);       <span class="comment">// (출력값) true</span></span><br><span class="line"><span class="built_in">console</span>.log(objA == objB); <span class="comment">// (출력값) false</span></span><br><span class="line"><span class="built_in">console</span>.log(objA == objC); <span class="comment">// (출력값) true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="호출-방식의-차이"><a href="#호출-방식의-차이" class="headerlink" title="호출 방식의 차이"></a>호출 방식의 차이</h3><p>기본 타입은 <strong>값에 의한 호출 방식</strong>이나, 참조 타입은 <strong>참조에 의한 호출 방식</strong>이다.</p>
+<p>함수를 호출할 때 인자로 기본 타입의 값을 넘길 경우, 호출된 함수의 매개변수로 복사된 값이 전달된다. 그래서 함수 내부에서 매개변수의 값을 변경해도 호출된 변수의 값이 변경되지는 않는다.</p>
+<p>이에 반해 함수를 호출할 때 인자로 참조 타입인 객체를 넘길 경우, 그 객체 참조값이 넘어가게 되어 함수 내부에서 매개변수의 값을 변경할 수 있게된다.</p>
+<h2 id="프로토타입"><a href="#프로토타입" class="headerlink" title="프로토타입"></a>프로토타입</h2><p>자바스크립트의 <strong>모든 객체는 자신의 부모 역할을 하는 객체와 연결</strong>되어 있다. 이러한 부모 객체를 <strong>프로토타입 객체</strong>라고 부른다.</p>
+<p>ECMAScript 명세서에는 자바스크립트의 모든 객체는 자신의 프로토타입을 가리키는 <code>[[Prototype]]</code>이라는 숨겨진 프로퍼티를 가지고 있다고 한다.</p>
+<p>객체 리터럴 방식으로 생성된 객체의 경우 Objsect.prototype 객체가 프로토타입 객체가 된다.</p>
+<h2 id="배열"><a href="#배열" class="headerlink" title="배열"></a>배열</h2><p>다른 언어들과 다르게 자바스크립트 배열은 크기를 지정하지 않아도 되며, 어떤 위치에 어느 타입의 데이터를 저장해도 된다.</p>
+<h3 id="배열-리터럴"><a href="#배열-리터럴" class="headerlink" title="배열 리터럴"></a>배열 리터럴</h3><p>배열을 생성하는데 사용하는 표기법이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colorArr = [<span class="string">'orange'</span>, <span class="string">'yellow'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="배열-요소-생성"><a href="#배열-요소-생성" class="headerlink" title="배열 요소 생성"></a>배열 요소 생성</h3><p>아무 인덱스 위치에 값을 동적으로 넣을 수 있다. 대신 앞의 인덱스가 정의되지 않았다면 <code>undefined</code>가 기본값으로 들어가며 생긴다. 하지만 그렇다고 실제 메모리도 생긴 배열처럼 할당되진 않는다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyArr = [];</span><br><span class="line"></span><br><span class="line">emptyArr[<span class="number">0</span>] = <span class="number">100</span>;</span><br><span class="line">emptyArr[<span class="number">3</span>] = <span class="string">'eight'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(emptyArr);</span><br><span class="line"><span class="comment">// (출력값) [100, undefined, undefined, "eight"]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="배열의-length-프로퍼티"><a href="#배열의-length-프로퍼티" class="headerlink" title="배열의 length 프로퍼티"></a>배열의 length 프로퍼티</h3><p>배열은 모두 length 프로퍼티가 있다. length 프로퍼티는 <strong>배열 내에 가장 큰 인덱스에 1을 더한 값</strong>이다.</p>
+<p>length 프로퍼티는 명시적으로 값을 변경할 수도 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr.length); <span class="comment">// (출력값) 3</span></span><br><span class="line"></span><br><span class="line">arr.length = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) [0, 1, 2, undefined, undefined]</span></span><br><span class="line"></span><br><span class="line">arr.length = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) [0, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">2</span>]);     <span class="comment">// (출력값) undefined</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이렇게 length를 수정하면 length가 가리키는 위치가 변경된다.</p>
+<p>length를 할당한 원소보다 안으로 설정하면 length를 벗어나는 값은 삭제되기 때문에 접근하면 <code>undefined</code>가 나온다.</p>
+<h3 id="배열의-프로토타입"><a href="#배열의-프로토타입" class="headerlink" title="배열의 프로토타입"></a>배열의 프로토타입</h3><p><img src="/images/placeholder.png" data-src="/images/javascript-data-type-img-2.png" class="lazyload"></p>
+<p>객체와 배열의 큰 차이점은 배열만의 표준 메소드 존재 여부이다. push(), pop() 같은 메소드는 객체에서는 사용할 수 없다. 하지만 나머지는 Array.prototype도 결국 Object.prototype이 부모이기 때문에 큰 차이가 없다.</p>
+<h3 id="배열-요소-삭제"><a href="#배열-요소-삭제" class="headerlink" title="배열 요소 삭제"></a>배열 요소 삭제</h3><p>배열도 객체이므로 <code>delete</code>연산자로 삭제할 수 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'zero'</span>, <span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>];</span><br><span class="line"><span class="keyword">delete</span> arr[<span class="number">2</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) ['zero', 'one', undefined, 'three']</span></span><br><span class="line"><span class="built_in">console</span>.log(arr.length); <span class="comment">// (출력값) 4</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>delete</code>는 해당 요소의 값을 <code>undefined</code>로 설정할 뿐 원소 자체를 삭제하지는 않는다.</p>
+<h3 id="Array-생성자-함수"><a href="#Array-생성자-함수" class="headerlink" title="Array() 생성자 함수"></a>Array() 생성자 함수</h3><p>Array() 생성자 함수는 인자 개수에 따라 동작이 다르다.</p>
+<ul>
+<li>인자가 1개이고 숫자일 때 : 호출된 인자를 length로 갖는 빈 배열 생성</li>
+<li>그외의 경우 : 호출된 인자를 요소로 갖는 배열 생성</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>);       <span class="comment">// [undefined, undefined, undefined]</span></span><br><span class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="기본-타입의-표준-메소드"><a href="#기본-타입의-표준-메소드" class="headerlink" title="기본 타입의 표준 메소드"></a>기본 타입의 표준 메소드</h1><p>자바스크립트는 숫자, 문자열, 불린값에 대해 각 타입별로 호출 가능한 표준 메소드를 정의하고 있다. </p>
+<p>기본 타입의 경우 객체가 아닌데 어떻게 메소드를 호출할 수 있을까?</p>
+<p>기본 타입의 값들이 메소드를 호출한 경우, 이들 기본값은 메소드 처리 순간에 객체로 변환된 다음 각 타입별 표준 메소드(<code>charAt()</code>)를 호출한다. 그 메소드가 끝나면 다시 기본값으로 복귀하게 된다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"test"</span>.charAt(<span class="number">2</span>)); <span class="comment">// (출력값) 's'</span></span><br></pre></td></tr></tbody></table></figure>
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/javascript/">javascript</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/10/20/javascript-data-type/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/10/15/javascript-scope/">Javascript - 스코프(scope)</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>10월 15, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h3 id="스코프란"><a href="#스코프란" class="headerlink" title="스코프란?"></a>스코프란?</h3><ul>
+<li>변수나 함수같은 참조 대상 식별자를 찾아내기 위한 규칙</li>
+<li>이 규칙대로 자바스크립트는 식별자를 찾음</li>
+</ul>
+<h3 id="종류"><a href="#종류" class="headerlink" title="종류"></a>종류</h3><ul>
+<li>전역 스코프: 코드 어디에서든지 참조 가능</li>
+<li>지역 스코프: 함수 코드 블록이 만든 스코프로, 함수 자신과 하위 함수에서만 참조 가능</li>
+</ul>
+<h3 id="자바스크립트-스코프의-특징"><a href="#자바스크립트-스코프의-특징" class="headerlink" title="자바스크립트 스코프의 특징"></a>자바스크립트 스코프의 특징</h3><ul>
+<li>함수 레벨 스코프: 함수 코드 블록 내에서 선언된 변수는 함수 코드 블록 내에서만 유효<ul>
+<li>보통은 블록 레벨 스코프: 코드 블록 내에서만 유효한 스코프</li>
+<li>ECMAScript 6에 도입된 let은 블록 레벨 스코프</li>
+</ul>
+</li>
+</ul>
+<h3 id="함수-스코프-종류"><a href="#함수-스코프-종류" class="headerlink" title="함수 스코프 종류"></a>함수 스코프 종류</h3><ul>
+<li>렉시컬 스코프<ul>
+<li>함수를 어디서 호출하는지가 아니라 어디에 선언하였는지에 따라 상위 스코프가 결정됨.</li>
+</ul>
+</li>
+<li>동적 스코프<ul>
+<li>함수를 어디에 호출했는지에 따라 상위 스코프가 결정됨.</li>
+</ul>
+</li>
+</ul>
+<h3 id="암묵적-전역"><a href="#암묵적-전역" class="headerlink" title="암묵적 전역"></a>암묵적 전역</h3><ul>
+<li>선언을 안해도 스코프 체인을 통해 window로 접근해 프로퍼티를 동적 생성함.</li>
+</ul>
+<h3 id="스코프체인"><a href="#스코프체인" class="headerlink" title="스코프체인"></a>스코프체인</h3><ul>
+<li>일단 자신이 속한 스코프에서 찾고 그 스코프에 식별자가 없으면 상위 스코프에서 다시 찾아감.</li>
+</ul>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/javascript/">javascript</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/10/15/javascript-scope/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/10/14/angular-hierarchical-dependency-injection/">angular - injector 원리</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>10월 14, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h1 id="2개의-injector-계층"><a href="#2개의-injector-계층" class="headerlink" title="2개의 injector 계층"></a>2개의 injector 계층</h1><ul>
+<li>ModuleInjector 계층<ul>
+<li>@NgModule() 이나 @Injectable()를 사용하여 ModuleInjector를 구성함.</li>
+</ul>
+</li>
+<li>ElementInjector 계층</li>
+</ul>
+<h2 id="ModuleInjector"><a href="#ModuleInjector" class="headerlink" title="ModuleInjector"></a>ModuleInjector</h2><p>2가지 구성 방법이 있음.</p>
+<ul>
+<li>@Injectable() 에서 providedIn을 사용하고 @NgModule()에 참조</li>
+<li>@NgModule()의 providers 배열에 추가<ul>
+<li>ModuleInjector는 NgModule.providers 및 NgModule.imports 속성으로 구성됨.</li>
+<li>NgModule.imports를 재귀적으로 따라가 도달할 수 있는 모든 providers 배열을 flatten 시킴.</li>
+<li>lazy loading하는 NgModules가 있을 때 Child ModuleInjector들이 생김.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Platform-injector"><a href="#Platform-injector" class="headerlink" title="Platform injector"></a>Platform injector</h3><ul>
+<li>root ModuleInjector 위에 PlatformModule로 구성된 ModuleInjector와 NullInjector() 가 더 있음.</li>
+<li>platformBrowserDynamic() 은 PlatformModule에 의해 구성된 injector 생성함.</li>
+<li>다음 부모 injector는 NullInjector이고 tree에 top임.</li>
+<li>service을 찾다가 NullInjector를 만나면 null을 return 함.</li>
+</ul>
+<h2 id="ElementInjector"><a href="#ElementInjector" class="headerlink" title="ElementInjector"></a>ElementInjector</h2><ul>
+<li>각 component(and directive)는 dom element를 위한 암묵적으로 ElementInjector를 만든다.</li>
+<li>ElementInjector에는 provider, viewProvider, 자기 자신(component or directive) 등이 포함되어 있다.</li>
+<li>component에서 services를 provide했을때, ElementInjector를 통해 해당 컴포넌트에서 그 service가 사용 가능하다.</li>
+<li>해당 component가 destroy 되면 service도 destroy된다.</li>
+</ul>
+<h2 id="의존성을-찾는-규칙"><a href="#의존성을-찾는-규칙" class="headerlink" title="의존성을 찾는 규칙"></a>의존성을 찾는 규칙</h2><p>컴포넌트나 디렉티브에서 provide된 토큰을 찾을 때, angular는 2가지 기준으로 찾기 시작한다.</p>
+<ul>
+<li>ElementInjector 계층 구조에서 먼저 찾고</li>
+<li>ModuleInjector 계층 구조에서 찾는다</li>
+</ul>
+<p><strong>순서</strong></p>
+<ol>
+<li>component가 의존성 요청한다.</li>
+<li>angular는 그 component의 ElementInjector에서 의존성을 찾는다.</li>
+<li>만약 그 component의 injector에 provider가 없다면 부모 component의 ElementInjector에 요청한다.</li>
+<li>상위 ElementInjector가 부족할 때까지 계속 올라간다.</li>
+<li>못찾으면 시작된 component로 돌아가서 ModuleInjector 계층 구조를 탐색한다.</li>
+<li>또 못찾으면 에러를 발생시킨다.</li>
+</ol>
+<p>만약 중복으로 provider에 등록했다면, angular는 처음에 찾은 걸 사용하고 다른 provider에 있는건 보지 않는다.</p>
+<h2 id="Resoltion-modifiers"><a href="#Resoltion-modifiers" class="headerlink" title="Resoltion modifiers"></a>Resoltion modifiers</h2><p>Angular의 찾는 행위는 modifier에 의해 수정될 수 있다.</p>
+<ul>
+<li>@Optional - 없어도 에러 내지 않음.</li>
+<li>@Self - 해당 컴포넌트의 ElementInjector만 찾아봄.</li>
+<li>@SkipSelf - 부모의 ElementInjector부터 찾기 시작하게 함.(본인 생략)</li>
+<li>@Host - HostComponent(의존성을 요청한 컴포넌트)까지만 찾도록 함.<ul>
+<li>정확히 해당 component가 속해있는 뷰까지만 찾음.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Provider-vs-viewProvider"><a href="#Provider-vs-viewProvider" class="headerlink" title="Provider vs viewProvider"></a>Provider vs viewProvider</h2><p>@Component에서 provider와 viewProvider property를 사용할 수 있다.</p>
+<ul>
+<li>provider: component 메타데이터에 삽입됨.<ul>
+<li>child component도 똑같이 provide된 토큰을 공유해 사용할 수 있다.</li>
+</ul>
+</li>
+<li>viewProvider: view에서 사용가능하도록 한다.<ul>
+<li>ng-content로 들어온 component에서는 provide되지 않는다.<ul>
+<li>ng-content는 component의 view 안에 속하지 않기 때문</li>
+</ul>
+</li>
+<li>view 안에 명시된 component는 똑같이 공유 가능하다.</li>
+<li>component class도 view이기 때문에 사용 가능하다.</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<blockquote>
+<p>참조</p>
+<p><a target="_blank" rel="noopener" href="https://angular.io/guide/hierarchical-dependency-injection">https://angular.io/guide/hierarchical-dependency-injection</a></p>
+</blockquote>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/angular/">angular</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/10/14/angular-hierarchical-dependency-injection/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/10/14/virtual-dom-vs-incremental-dom/">virtual dom vs incremental dom</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>10월 14, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h1 id="virtual-dom"><a href="#virtual-dom" class="headerlink" title="virtual dom"></a>virtual dom</h1><ul>
+<li>모든 컴포넌트는 매 렌더링 시마다 새로운 돔 트리를 생성</li>
+<li>react는 새로운 돔 트리를 기존 돔 트리와 비교한 뒤, 변경 사항을 브라우저의 돔에 적용</li>
+</ul>
+<p>장점:</p>
+<ul>
+<li>렌더링 함수를 구현할 때 어떤 프로그래밍 언어든 사용 가능하므로, 컴파일할 필요가 없음. React는 주로 JSX를 사용하지만, plain javascript를 사용할 수도 있음.</li>
+<li>렌더링된 컴포넌트의 결과를 얻을 수 있어서 테스트나 디버깅에 사용할 수 있음.</li>
+</ul>
+<h1 id="Incremental-dom"><a href="#Incremental-dom" class="headerlink" title="Incremental dom"></a><strong>Incremental dom</strong></h1><ul>
+<li>구글에서 만듬</li>
+<li>key idea: 모든 컴포넌트들은 각각 자체 렌더링 엔진이 되는 코드로 컴파일됨. 이 엔진들은 DOM 트리를 데이터가 바뀔 때 올바른 위치에 업데이트하거나 만듬.</li>
+<li>구글의 2가지 목표<ul>
+<li>tree shakable: dom 트리에서 사용하지 않는 node 제거</li>
+<li>low memory footprint: 적은 메모리 사용량</li>
+</ul>
+</li>
+</ul>
+<h2 id="tree-shakable이-되는-이유"><a href="#tree-shakable이-되는-이유" class="headerlink" title="tree shakable이 되는 이유"></a><strong>tree shakable이 되는 이유</strong></h2><p>프레임워크 자체(런타임)에서 컴포넌트를 바로 해석하지 않고, 컴포넌트는 특정 코드(명령)들을 참조한다. 만약 참조하지 않고 있으면 아예 사용되지 않는다. 이 행동은 번들에서가 아니라 컴파일 시점에서 하기때문에 사용하지 않는 코드를 제거할 수 있다.</p>
+<p>반면 virtual dom 은 런타임 때 컴포넌트가 해석된다. 컴파일 시점에 필요한지 필요하지 않은지 알 수 없기 때문에 항상 브라우저로 보내야한다.</p>
+<h2 id="적은-메모리-사용량을-갖는-이유"><a href="#적은-메모리-사용량을-갖는-이유" class="headerlink" title="적은 메모리 사용량을 갖는 이유"></a><strong>적은 메모리 사용량을 갖는 이유</strong></h2><p>virtual dom은 매 렌더링 마다 전체 트리를 새로 만들지만,</p>
+<p>incremantal dom은 dom이 바뀌지 않았을 때는 렌더링하는데 memory가 전혀 필요하지 않다. 오직 dom node가 추가되거나 제거될때만 필요하다. 크기도 dom 트리 전체가 아니라 dom 변경 사이즈만큼만 할당된다.</p>
+<blockquote>
+<p>참조:</p>
+<p><a target="_blank" rel="noopener" href="https://d2.naver.com/helloworld/59361">https://d2.naver.com/helloworld/59361</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.nrwl.io/understanding-angular-ivy-incremental-dom-and-virtual-dom-243be844bf36">https://blog.nrwl.io/understanding-angular-ivy-incremental-dom-and-virtual-dom-243be844bf36</a></p>
+</blockquote>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/angular/">angular</a>           
+			            
+				<a class="link" href="/tags/react/">react</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/10/14/virtual-dom-vs-incremental-dom/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+	
+	
+
+<article class="article">		
+	   
+	<div class="article-header">
+	    
+		<a class="title" href="/2021/10/14/test-runner-vs-test-framework/">Test Runner vs Test Framework</a>  
+	       
+		 
+
+		<div class="meta">
+			<time>10월 14, 2021</time>			
+		</div>
+	</div>
+
+
+	
+
+    
+	<div class="typo article-excerpt">	
+		 
+			<h1 id="Test-Software"><a href="#Test-Software" class="headerlink" title="Test Software"></a>Test Software</h1><ul>
+<li>Test Runners: Karma</li>
+<li>Testing Frameworks: Mocha</li>
+<li>Assertion Libraries: Chai</li>
+<li>Testing Plugins: Sinon</li>
+</ul>
+<h2 id="Test-Runners-Karma"><a href="#Test-Runners-Karma" class="headerlink" title="Test Runners: Karma"></a>Test Runners: Karma</h2><ul>
+<li>가짜 서버 띄움</li>
+<li>가짜 서버로부터 파생된 데이터를 사용하여 다양한 브라우저에서 실행하는 테스트 실행기</li>
+<li>실제 테스트를 실행하기 위해 Mocha같은 Test Framework가 필요함</li>
+</ul>
+<h2 id="Testing-Framework-Mocha"><a href="#Testing-Framework-Mocha" class="headerlink" title="Testing Framework: Mocha"></a>Testing Framework: Mocha</h2><ul>
+<li><code>it</code>, <code>beforeEach</code>, <code>describe</code> 같은 메소드 지원</li>
+<li>test runner보다는 낮지만 assertion library 보다는 높은 추상화 수준</li>
+</ul>
+<h2 id="Assertion-Libraries-Chai"><a href="#Assertion-Libraries-Chai" class="headerlink" title="Assertion Libraries: Chai"></a>Assertion Libraries: Chai</h2><ul>
+<li>실제 테스트인 부분을 구현</li>
+<li>조건을 검사해 validation함</li>
+<li>Jasmine같은 Testing Framework는 assertion library가 내장되어 있음.</li>
+</ul>
+<h2 id="Test-Plugins-Sinon"><a href="#Test-Plugins-Sinon" class="headerlink" title="Test Plugins: Sinon"></a>Test Plugins: Sinon</h2><ul>
+<li><code>Chai</code>와 함께 더 다양한 테스트 셋을 구성할 수 있도록 도와주는 역할</li>
+<li><code>Sinon</code> 을 통해 Mock, 가짜 서버, stub을 만들 수 있음.</li>
+<li>소스 내부로 들어가 확인할 수 있는 기능들이 있음.</li>
+</ul>
+
+		  	  
+	</div>
+
+
+
+	<div class="article-categories">
+	 
+	</div>
+	
+
+	<div class="article-tags">
+		
+			<i class="iconfont icon-tags" style="margin-right:4px"></i>
+			            
+				<a class="link" href="/tags/cs/">cs</a>           
+			
+		
+	</div>
+
+	<div class="article-bottom">
+		<a class="readmore" href="/2021/10/14/test-runner-vs-test-framework/">Continue</a> 	
+	</div>	
+    
+</article>
+
+	
+	
+
+	
+	
+
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+</div>
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon lazyload" src="/images/placeholder.png" data-src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>

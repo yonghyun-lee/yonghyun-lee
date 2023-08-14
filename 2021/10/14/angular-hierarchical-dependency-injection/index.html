@@ -1,0 +1,362 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  Angular - Injector 원리 |   Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			angular - injector 원리
+		</p>
+		<div class="info">	
+			<time>
+				10월 14, 2021
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">1872
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h1 id="2개의-injector-계층"><a href="#2개의-injector-계층" class="headerlink" title="2개의 injector 계층"></a>2개의 injector 계층</h1><ul>
+<li>ModuleInjector 계층<ul>
+<li>@NgModule() 이나 @Injectable()를 사용하여 ModuleInjector를 구성함.</li>
+</ul>
+</li>
+<li>ElementInjector 계층</li>
+</ul>
+<h2 id="ModuleInjector"><a href="#ModuleInjector" class="headerlink" title="ModuleInjector"></a>ModuleInjector</h2><p>2가지 구성 방법이 있음.</p>
+<ul>
+<li>@Injectable() 에서 providedIn을 사용하고 @NgModule()에 참조</li>
+<li>@NgModule()의 providers 배열에 추가<ul>
+<li>ModuleInjector는 NgModule.providers 및 NgModule.imports 속성으로 구성됨.</li>
+<li>NgModule.imports를 재귀적으로 따라가 도달할 수 있는 모든 providers 배열을 flatten 시킴.</li>
+<li>lazy loading하는 NgModules가 있을 때 Child ModuleInjector들이 생김.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Platform-injector"><a href="#Platform-injector" class="headerlink" title="Platform injector"></a>Platform injector</h3><ul>
+<li>root ModuleInjector 위에 PlatformModule로 구성된 ModuleInjector와 NullInjector() 가 더 있음.</li>
+<li>platformBrowserDynamic() 은 PlatformModule에 의해 구성된 injector 생성함.</li>
+<li>다음 부모 injector는 NullInjector이고 tree에 top임.</li>
+<li>service을 찾다가 NullInjector를 만나면 null을 return 함.</li>
+</ul>
+<h2 id="ElementInjector"><a href="#ElementInjector" class="headerlink" title="ElementInjector"></a>ElementInjector</h2><ul>
+<li>각 component(and directive)는 dom element를 위한 암묵적으로 ElementInjector를 만든다.</li>
+<li>ElementInjector에는 provider, viewProvider, 자기 자신(component or directive) 등이 포함되어 있다.</li>
+<li>component에서 services를 provide했을때, ElementInjector를 통해 해당 컴포넌트에서 그 service가 사용 가능하다.</li>
+<li>해당 component가 destroy 되면 service도 destroy된다.</li>
+</ul>
+<h2 id="의존성을-찾는-규칙"><a href="#의존성을-찾는-규칙" class="headerlink" title="의존성을 찾는 규칙"></a>의존성을 찾는 규칙</h2><p>컴포넌트나 디렉티브에서 provide된 토큰을 찾을 때, angular는 2가지 기준으로 찾기 시작한다.</p>
+<ul>
+<li>ElementInjector 계층 구조에서 먼저 찾고</li>
+<li>ModuleInjector 계층 구조에서 찾는다</li>
+</ul>
+<p><strong>순서</strong></p>
+<ol>
+<li>component가 의존성 요청한다.</li>
+<li>angular는 그 component의 ElementInjector에서 의존성을 찾는다.</li>
+<li>만약 그 component의 injector에 provider가 없다면 부모 component의 ElementInjector에 요청한다.</li>
+<li>상위 ElementInjector가 부족할 때까지 계속 올라간다.</li>
+<li>못찾으면 시작된 component로 돌아가서 ModuleInjector 계층 구조를 탐색한다.</li>
+<li>또 못찾으면 에러를 발생시킨다.</li>
+</ol>
+<p>만약 중복으로 provider에 등록했다면, angular는 처음에 찾은 걸 사용하고 다른 provider에 있는건 보지 않는다.</p>
+<h2 id="Resoltion-modifiers"><a href="#Resoltion-modifiers" class="headerlink" title="Resoltion modifiers"></a>Resoltion modifiers</h2><p>Angular의 찾는 행위는 modifier에 의해 수정될 수 있다.</p>
+<ul>
+<li>@Optional - 없어도 에러 내지 않음.</li>
+<li>@Self - 해당 컴포넌트의 ElementInjector만 찾아봄.</li>
+<li>@SkipSelf - 부모의 ElementInjector부터 찾기 시작하게 함.(본인 생략)</li>
+<li>@Host - HostComponent(의존성을 요청한 컴포넌트)까지만 찾도록 함.<ul>
+<li>정확히 해당 component가 속해있는 뷰까지만 찾음.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Provider-vs-viewProvider"><a href="#Provider-vs-viewProvider" class="headerlink" title="Provider vs viewProvider"></a>Provider vs viewProvider</h2><p>@Component에서 provider와 viewProvider property를 사용할 수 있다.</p>
+<ul>
+<li>provider: component 메타데이터에 삽입됨.<ul>
+<li>child component도 똑같이 provide된 토큰을 공유해 사용할 수 있다.</li>
+</ul>
+</li>
+<li>viewProvider: view에서 사용가능하도록 한다.<ul>
+<li>ng-content로 들어온 component에서는 provide되지 않는다.<ul>
+<li>ng-content는 component의 view 안에 속하지 않기 때문</li>
+</ul>
+</li>
+<li>view 안에 명시된 component는 똑같이 공유 가능하다.</li>
+<li>component class도 view이기 때문에 사용 가능하다.</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<blockquote>
+<p>참조</p>
+<p><a target="_blank" rel="noopener" href="https://angular.io/guide/hierarchical-dependency-injection">https://angular.io/guide/hierarchical-dependency-injection</a></p>
+</blockquote>
+  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-none-link" href="/tags/angular/" rel="tag">angular</a>
+      
+    </div>
+
+    <div class="operate">
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+      <a href="/2021/10/14/virtual-dom-vs-incremental-dom/" class="link-wrap">
+        <strong class="caption">older</strong>
+        
+        <span class="title">
+          virtual dom vs incremental dom
+        </span>
+      </a>
+      
+    </div>
+    <div class="link">
+      
+      <a href="/2021/10/15/javascript-scope/" class="link-wrap">
+        <strong class="caption">newer</strong>
+        
+        <span class="title">
+          Javascript - 스코프(scope)
+        </span>
+      </a>
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://' + 'yongs-blog-2' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>

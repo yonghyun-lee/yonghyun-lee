@@ -1,0 +1,401 @@
+<!DOCTYPE html><html><head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="google-site-verification" content="UdfNlUq5JGRtWdvyd1Fj2SqYBV6W6j9uY9sYFn_06BA">
+  
+  
+  <title>  Javascript - 자바스크립트 데이터 타입 |   Yong's blog </title>
+
+ 
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/nayo.min.css">
+ 
+  <script data-ad-client="ca-pub-4254567049093696" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>  
+  <body>   
+    
+      <header class="header-wrapper">
+
+  <nav class="inner">
+    <div class="title">
+      <a href="/">
+        <img class="logo" src="/images/logo.png">
+      </a>
+    </div>
+
+    <ul class="menu">
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-home" id="menu-home" href="/"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-archives" id="menu-archives" href="/archives"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-tags" id="menu-tags" href="/tags"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-about" id="menu-about" href="/about"></a>
+      </li>
+      
+      
+      
+      <li class="item">
+        <a class="link iconfont icon-search" id="menu-search"></a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+</header>
+
+<header class="mobile-header-wrapper">
+  <i id="mobile-toggle" class="iconfont icon-menu mobile-toggle"></i>
+</header>   
+
+      <div class="container">       
+          
+          
+            <div class="container-inner">  
+          
+
+          <article class="post slideDownMin">
+  
+	
+<div class="header">
+		<p class="title">	
+			javascript - 자바스크립트 데이터 타입
+		</p>
+		<div class="info">	
+			<time>
+				10월 20, 2021
+			</time>
+
+			
+			
+				<i class="iconfont icon-words"></i>
+				<span class="words">5231
+				</span>
+			
+		</div>
+</div> 
+	
+
+    <script type="text/x-mathjax-config">
+        var post = document.getElementsByClassName("post")[0];  
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            messageStyle: "none",    
+            tex2jax: {
+                inlineMath:  [ ["$", "$"] , ["\\(","\\)"]],
+                displayMath: [ ["$$","$$"] , ["\\[","\\]"]],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            },
+            "HTML-CSS": {            
+                showMathMenu: false
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,post]);
+    </script>
+    <style>.MathJax{outline:0;}</style>
+
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.2/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+ 
+
+	  <div class="typo post-content ">
+
+		
+
+			
+					<h1 id="자바스크립트의-타입"><a href="#자바스크립트의-타입" class="headerlink" title="자바스크립트의 타입"></a>자바스크립트의 타입</h1><ul>
+<li>기본 타입<ul>
+<li>number, string, boolean, null, undefined</li>
+</ul>
+</li>
+<li>참조 타입<ul>
+<li>Object, Array</li>
+</ul>
+</li>
+</ul>
+<h1 id="기본-타입"><a href="#기본-타입" class="headerlink" title="기본 타입"></a>기본 타입</h1><p>숫자, 문자열, 불린, null, undefined가 있다. 기본 타입의 특징은 그 자체가 하나의 값을 나타낸다.</p>
+<h2 id="숫자"><a href="#숫자" class="headerlink" title="숫자"></a>숫자</h2><p>C언어는 int, long, float, double 같은 여러 숫자 타입이 존재하지만, 자바스크립트는 number라는 하나의 숫자형만 존재한다. 자바스크립트에서는 <strong>모든 숫자를 64비트 부동 소수점 형태</strong>로 저장하기 때문이다. C언어의 double과 유사하다.</p>
+<h3 id="특징"><a href="#특징" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>정수형이 따로 없다</li>
+<li>모든 숫자를 64비트 부동 소수점 형태</li>
+<li>모든 숫자를 실수로 처리하므로 나눗셈 연산에 주의해야 한다.</li>
+</ul>
+<h2 id="문자열"><a href="#문자열" class="headerlink" title="문자열"></a>문자열</h2><p>문자열은 작은 따옴표(‘)나 큰 따옴표(“)로 생성할 수 있다. </p>
+<h3 id="특징-1"><a href="#특징-1" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>C언어에서의 char 타입처럼 문자 하나만을 별도로 나타내는 데이터 타입은 없다.</li>
+<li>한 번 정의된 문자열은 변하지 않는다.</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'test'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str[<span class="number">0</span>], str[<span class="number">1</span>], str[<span class="number">2</span>], str[<span class="number">3</span>]);</span><br><span class="line"><span class="comment">// (출력값) test</span></span><br><span class="line"></span><br><span class="line">str[<span class="number">0</span>] = <span class="string">'T'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str);</span><br><span class="line"><span class="comment">// (출력값) test</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="불린값-boolean"><a href="#불린값-boolean" class="headerlink" title="불린값(boolean)"></a>불린값(boolean)</h2><p>자바스크립트에는 true와 false를 나타내는 boolean 타입이 있다.</p>
+<h2 id="null과-undefined"><a href="#null과-undefined" class="headerlink" title="null과 undefined"></a>null과 undefined</h2><p>null과 undefined는 ‘값이 비어있음’을 나타낸다. 자바스크립트 환경 내에서 기본적으로 할당되지 않는 변수는 undefined 타입이고 값도 undefined이다. 즉 <strong>undefined는 타입이자, 값을 나타낸다</strong>.</p>
+<p>undefined가 아직 값을 할당하지 않아서 비어있는 값이라면, null은 개발자가 명시적으로 값이 없다는 것을 나타낼 때 사용한다. 그래서 undefined는 타입도 undefined지만 null 값을 넣은 변수의 타입은 object이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nullVar = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> nullVar === <span class="literal">null</span>);  <span class="comment">// (출력값) false</span></span><br><span class="line"><span class="built_in">console</span>.log(nullVar === <span class="literal">null</span>);         <span class="comment">// (출력값) true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="특징-2"><a href="#특징-2" class="headerlink" title="특징"></a>특징</h3><ul>
+<li>undefined, null는 값이 비어있다는 의미</li>
+<li>undefined는 아직 값을 할당하지 않은 것, null은 일부러 값이 비어있음을 명시할 때</li>
+<li>undefined는 타입이자 값</li>
+<li>null의 타입은 object</li>
+</ul>
+<h1 id="참조-타입-객체"><a href="#참조-타입-객체" class="headerlink" title="참조 타입 (객체)"></a>참조 타입 (객체)</h1><p>자바스크립트에서 기본 타입을 제외한 모든 값은 객체이다. 배열, 함수, 정규표현식 등도 모두 객체다. 즉 참조 타입은 객체 타입이다.</p>
+<p>자바스크립트 객체는 <code>이름(key): 값(value)</code> 형태의 프로퍼티들을 저장하는 컨테이너이다. 이것은 컴퓨터 과학 분야에서 해시(Hash)라는 자료구조와 유사하다.</p>
+<h2 id="객체-생성"><a href="#객체-생성" class="headerlink" title="객체 생성"></a>객체 생성</h2><p>객체를 생성하는 방법은 3가지가 있다.</p>
+<ul>
+<li>Object() 생성자 함수</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">foo.name = <span class="string">'foo'</span>;</span><br><span class="line">foo.age = <span class="number">30</span>;</span><br><span class="line">foo.gender = <span class="string">'male'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo); <span class="comment">// (출력값) object</span></span><br><span class="line"><span class="built_in">console</span>.log(foo);        <span class="comment">// (출력값) { name: 'foo', age: 30, gender: 'male' }</span></span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>객체 리터럴 방식 이용</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">age</span>: <span class="number">30</span>,</span><br><span class="line">	<span class="attr">gender</span> : <span class="string">'male'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);</span><br><span class="line"><span class="built_in">console</span>.log(foo);</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>생성자 함수</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Foo = <span class="function"><span class="keyword">function</span>(<span class="params">name, age, gender</span>) </span>{</span><br><span class="line">  <span class="built_in">this</span>.name = name;</span><br><span class="line">	<span class="built_in">this</span>.age = age;</span><br><span class="line">	<span class="built_in">this</span>.gender = gender;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> Foo(<span class="string">'foo'</span>, <span class="number">30</span>, <span class="string">'male'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(f.name); <span class="comment">// (출력값) foo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="객체-프로퍼티-읽기-쓰기-갱신"><a href="#객체-프로퍼티-읽기-쓰기-갱신" class="headerlink" title="객체 프로퍼티 읽기/쓰기/갱신"></a>객체 프로퍼티 읽기/쓰기/갱신</h2><p>객체의 프로퍼티 접근법은 2가지가 있다.</p>
+<ul>
+<li>대괄호([]) 표기법</li>
+<li>마침표(.) 표기법</li>
+</ul>
+<h3 id="프로퍼티-읽기"><a href="#프로퍼티-읽기" class="headerlink" title="프로퍼티 읽기"></a>프로퍼티 읽기</h3><figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(foo.name);    <span class="comment">// (출력값) foo</span></span><br><span class="line"><span class="built_in">console</span>.log(foo[<span class="string">'name'</span>]); <span class="comment">// (출력값) foo</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="프로퍼티-갱신"><a href="#프로퍼티-갱신" class="headerlink" title="프로퍼티 갱신"></a>프로퍼티 갱신</h3><figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.major = <span class="string">'electronics engineering'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo[<span class="string">'major'</span>]); <span class="comment">// (출력값) electronics engineering</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="프로퍼티-동적-생성"><a href="#프로퍼티-동적-생성" class="headerlink" title="프로퍼티 동적 생성"></a>프로퍼티 동적 생성</h3><p>객체 생성 후에도 동적으로 프로퍼티를 추가할 수 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span></span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo.age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.age); <span class="comment">// (출력값) 30</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>접근하는 값이 있으면 갱신되고 없으면 동적으로 생성해 추가된다.</p>
+<h3 id="대괄호-표기법만-사용해야-하는-경우"><a href="#대괄호-표기법만-사용해야-하는-경우" class="headerlink" title="대괄호 표기법만 사용해야 하는 경우"></a>대괄호 표기법만 사용해야 하는 경우</h3><p>접근하려는 프로퍼티가 표현식이거나 예약어일 경우 대괄호 표기법만 사용한다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = {</span><br><span class="line">	<span class="attr">name</span> : <span class="string">'foo'</span>,</span><br><span class="line">	<span class="attr">major</span> : <span class="string">'compute science'</span>,</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">foo[<span class="string">'full-name'</span>] = <span class="string">'foo bar'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.full-name); <span class="comment">// (출력값) NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.[<span class="string">'full-name'</span>]); <span class="comment">// (출력값) foo bar</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이 예제에서 프로퍼티 이름에 <code>-</code>연산자가 포함되어 있어 마침표 표기법으로 접근할 수 없다.</p>
+<h2 id="NaN-Not-a-Number"><a href="#NaN-Not-a-Number" class="headerlink" title="NaN (Not a Number)"></a>NaN (Not a Number)</h2><p>자바스크립트에서 수치 연산을 해서 정상적인 값을 얻지 못할 때 출력되는 값이다.</p>
+<h2 id="객체-참조값"><a href="#객체-참조값" class="headerlink" title="객체 참조값"></a>객체 참조값</h2><p>객체를 왜 참조 타입이라고 부를까?</p>
+<p>객체의 모든 연산이 실제 값이 아닌 참조값으로 처리되기 때문이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objA = {</span><br><span class="line">	<span class="attr">val</span> : <span class="number">40</span></span><br><span class="line">};</span><br><span class="line"><span class="keyword">var</span> objB = objA;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(objA.val); <span class="comment">// (출력값) 40</span></span><br><span class="line"><span class="built_in">console</span>.log(objB.val); <span class="comment">// (출력값) 40</span></span><br><span class="line"></span><br><span class="line">objB.val = <span class="number">50</span>;</span><br><span class="line"><span class="built_in">console</span>.log(objA.val); <span class="comment">// (출력값) 50</span></span><br><span class="line"><span class="built_in">console</span>.log(objB.val); <span class="comment">// (출력값) 50</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>변수 objB에 objA를 할당하면 값을 할당하는 것이 아닌 참조값이 저장되기 때문에 값을 바꾸면 참조하고 있는 모든 객체의 값이 바뀐다.</p>
+<p><img src="/images/javascript-data-type-img-1.png"></p>
+<h3 id="객체-비교"><a href="#객체-비교" class="headerlink" title="객체 비교"></a>객체 비교</h3><p>동등 연산자(==)를 사용하여 객체를 비교할 때도 프로퍼티 값이 아닌 참조값을 비교한다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objA = { <span class="attr">value</span>: <span class="number">100</span> };</span><br><span class="line"><span class="keyword">var</span> objB = { <span class="attr">value</span>: <span class="number">100</span> };</span><br><span class="line"><span class="keyword">var</span> objC = objB;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a == b);       <span class="comment">// (출력값) true</span></span><br><span class="line"><span class="built_in">console</span>.log(objA == objB); <span class="comment">// (출력값) false</span></span><br><span class="line"><span class="built_in">console</span>.log(objA == objC); <span class="comment">// (출력값) true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="호출-방식의-차이"><a href="#호출-방식의-차이" class="headerlink" title="호출 방식의 차이"></a>호출 방식의 차이</h3><p>기본 타입은 <strong>값에 의한 호출 방식</strong>이나, 참조 타입은 <strong>참조에 의한 호출 방식</strong>이다.</p>
+<p>함수를 호출할 때 인자로 기본 타입의 값을 넘길 경우, 호출된 함수의 매개변수로 복사된 값이 전달된다. 그래서 함수 내부에서 매개변수의 값을 변경해도 호출된 변수의 값이 변경되지는 않는다.</p>
+<p>이에 반해 함수를 호출할 때 인자로 참조 타입인 객체를 넘길 경우, 그 객체 참조값이 넘어가게 되어 함수 내부에서 매개변수의 값을 변경할 수 있게된다.</p>
+<h2 id="프로토타입"><a href="#프로토타입" class="headerlink" title="프로토타입"></a>프로토타입</h2><p>자바스크립트의 <strong>모든 객체는 자신의 부모 역할을 하는 객체와 연결</strong>되어 있다. 이러한 부모 객체를 <strong>프로토타입 객체</strong>라고 부른다.</p>
+<p>ECMAScript 명세서에는 자바스크립트의 모든 객체는 자신의 프로토타입을 가리키는 <code>[[Prototype]]</code>이라는 숨겨진 프로퍼티를 가지고 있다고 한다.</p>
+<p>객체 리터럴 방식으로 생성된 객체의 경우 Objsect.prototype 객체가 프로토타입 객체가 된다.</p>
+<h2 id="배열"><a href="#배열" class="headerlink" title="배열"></a>배열</h2><p>다른 언어들과 다르게 자바스크립트 배열은 크기를 지정하지 않아도 되며, 어떤 위치에 어느 타입의 데이터를 저장해도 된다.</p>
+<h3 id="배열-리터럴"><a href="#배열-리터럴" class="headerlink" title="배열 리터럴"></a>배열 리터럴</h3><p>배열을 생성하는데 사용하는 표기법이다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colorArr = [<span class="string">'orange'</span>, <span class="string">'yellow'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="배열-요소-생성"><a href="#배열-요소-생성" class="headerlink" title="배열 요소 생성"></a>배열 요소 생성</h3><p>아무 인덱스 위치에 값을 동적으로 넣을 수 있다. 대신 앞의 인덱스가 정의되지 않았다면 <code>undefined</code>가 기본값으로 들어가며 생긴다. 하지만 그렇다고 실제 메모리도 생긴 배열처럼 할당되진 않는다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyArr = [];</span><br><span class="line"></span><br><span class="line">emptyArr[<span class="number">0</span>] = <span class="number">100</span>;</span><br><span class="line">emptyArr[<span class="number">3</span>] = <span class="string">'eight'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(emptyArr);</span><br><span class="line"><span class="comment">// (출력값) [100, undefined, undefined, "eight"]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="배열의-length-프로퍼티"><a href="#배열의-length-프로퍼티" class="headerlink" title="배열의 length 프로퍼티"></a>배열의 length 프로퍼티</h3><p>배열은 모두 length 프로퍼티가 있다. length 프로퍼티는 <strong>배열 내에 가장 큰 인덱스에 1을 더한 값</strong>이다.</p>
+<p>length 프로퍼티는 명시적으로 값을 변경할 수도 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr.length); <span class="comment">// (출력값) 3</span></span><br><span class="line"></span><br><span class="line">arr.length = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) [0, 1, 2, undefined, undefined]</span></span><br><span class="line"></span><br><span class="line">arr.length = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) [0, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">2</span>]);     <span class="comment">// (출력값) undefined</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>이렇게 length를 수정하면 length가 가리키는 위치가 변경된다.</p>
+<p>length를 할당한 원소보다 안으로 설정하면 length를 벗어나는 값은 삭제되기 때문에 접근하면 <code>undefined</code>가 나온다.</p>
+<h3 id="배열의-프로토타입"><a href="#배열의-프로토타입" class="headerlink" title="배열의 프로토타입"></a>배열의 프로토타입</h3><p><img src="/images/javascript-data-type-img-2.png"></p>
+<p>객체와 배열의 큰 차이점은 배열만의 표준 메소드 존재 여부이다. push(), pop() 같은 메소드는 객체에서는 사용할 수 없다. 하지만 나머지는 Array.prototype도 결국 Object.prototype이 부모이기 때문에 큰 차이가 없다.</p>
+<h3 id="배열-요소-삭제"><a href="#배열-요소-삭제" class="headerlink" title="배열 요소 삭제"></a>배열 요소 삭제</h3><p>배열도 객체이므로 <code>delete</code>연산자로 삭제할 수 있다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'zero'</span>, <span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>];</span><br><span class="line"><span class="keyword">delete</span> arr[<span class="number">2</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr);        <span class="comment">// (출력값) ['zero', 'one', undefined, 'three']</span></span><br><span class="line"><span class="built_in">console</span>.log(arr.length); <span class="comment">// (출력값) 4</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>delete</code>는 해당 요소의 값을 <code>undefined</code>로 설정할 뿐 원소 자체를 삭제하지는 않는다.</p>
+<h3 id="Array-생성자-함수"><a href="#Array-생성자-함수" class="headerlink" title="Array() 생성자 함수"></a>Array() 생성자 함수</h3><p>Array() 생성자 함수는 인자 개수에 따라 동작이 다르다.</p>
+<ul>
+<li>인자가 1개이고 숫자일 때 : 호출된 인자를 length로 갖는 빈 배열 생성</li>
+<li>그외의 경우 : 호출된 인자를 요소로 갖는 배열 생성</li>
+</ul>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>);       <span class="comment">// [undefined, undefined, undefined]</span></span><br><span class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="기본-타입의-표준-메소드"><a href="#기본-타입의-표준-메소드" class="headerlink" title="기본 타입의 표준 메소드"></a>기본 타입의 표준 메소드</h1><p>자바스크립트는 숫자, 문자열, 불린값에 대해 각 타입별로 호출 가능한 표준 메소드를 정의하고 있다. </p>
+<p>기본 타입의 경우 객체가 아닌데 어떻게 메소드를 호출할 수 있을까?</p>
+<p>기본 타입의 값들이 메소드를 호출한 경우, 이들 기본값은 메소드 처리 순간에 객체로 변환된 다음 각 타입별 표준 메소드(<code>charAt()</code>)를 호출한다. 그 메소드가 끝나면 다시 기본값으로 복귀하게 된다.</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"test"</span>.charAt(<span class="number">2</span>)); <span class="comment">// (출력값) 's'</span></span><br></pre></td></tr></tbody></table></figure>  	
+					
+	  </div>     
+	  
+
+	<div class="bottom">
+  <div class="other">
+    <div class="meta">
+      
+
+      
+      <i class="iconfont icon-tag"></i>
+      <a class="tag-none-link" href="/tags/javascript/" rel="tag">javascript</a>
+      
+    </div>
+
+    <div class="operate">
+      
+    </div>
+  </div>
+
+
+  
+  <nav class="nav">
+    <div class="link">
+      
+      <a href="/2021/10/15/javascript-scope/" class="link-wrap">
+        <strong class="caption">older</strong>
+        
+        <span class="title">
+          Javascript - 스코프(scope)
+        </span>
+      </a>
+      
+    </div>
+    <div class="link">
+      
+      <a href="/2021/11/01/closure/" class="link-wrap">
+        <strong class="caption">newer</strong>
+        
+        <span class="title">
+          클로저(closure)
+        </span>
+      </a>
+      
+    </div>
+  </nav>
+  
+</div> 
+	
+<div class="comment">
+
+    
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://' + 'yongs-blog-2' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+    
+</div>	
+</article>
+
+          </div> 
+      </div>            
+    
+        <i id="toTop" class="iconfont icon-backtotop"></i>
+
+  
+    <div class="none" id="search">
+    <div class="header">
+        <input type="text" placeholder="Typing Something here." id="search-input" class="input">
+        
+        <i id="search-cancel" class="iconfont icon-cancel"></i>
+    </div>
+
+    <div id="search-result" class="result"></div>
+</div>
+     <div class="mobile-menu">      
+
+      
+      <img class="mobile-menu-icon" src="/images/favicon.png">  
+      
+
+         
+            
+
+            <a class="mobile-menu-link" href="/">Home
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/archives">Archives
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/tags">Tags
+            </a>
+            
+         
+            
+
+            <a class="mobile-menu-link" href="/about">About
+            </a>
+            
+         
+                          
+
+            <a class="mobile-menu-link mobile-menu-search" href="#">Search </a>                 
+            
+         
+      
+</div>
+        
+    
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-141918335-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141918335-1');
+</script>
+
+     
+    
+
+
+<footer class="footer">
+	<div class="inner">
+		<div class="copyright">
+			©
+			
+			2021 -
+			
+			2023
+			yonghyun lee
+
+			<br>
+			By <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Lemonreds/hexo-theme-Nayo" target="_blank">Nayo</a>
+		</div>
+	</div>
+</footer>   
+
+    
+<script src="/nayo.bundle.js"></script>
+           
+          
+</body></html>
